@@ -1,6 +1,4 @@
 namespace CurrencyDeltaApi.Models;
 
-/// <summary>
-/// Single currency delta entry returned to the caller.
-/// </summary>
+// Response med valutakod och beräknat delta
 public sealed record CurrencyDeltaResponse(string Currency, decimal Delta);

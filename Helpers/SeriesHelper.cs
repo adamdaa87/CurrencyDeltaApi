@@ -1,10 +1,6 @@
 namespace CurrencyDeltaApi.Helpers;
 
-/// <summary>
-/// Utility for constructing Riksbank series identifiers.
-/// Series naming rule: "sek" + lowercase(currency) + "pmi"
-/// Example: GBP → sekgbppmi
-/// </summary>
+// Bygger Riksbankens serie-identifierare: sek + valuta + pmi
 public static class SeriesHelper
 {
     public static string BuildSeries(string currencyCode) =>

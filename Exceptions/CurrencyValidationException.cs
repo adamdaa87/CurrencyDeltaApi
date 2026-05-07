@@ -1,9 +1,6 @@
 namespace CurrencyDeltaApi.Exceptions;
 
-/// <summary>
-/// Thrown when request validation fails.
-/// Carries a machine-readable error code and a human-readable detail message.
-/// </summary>
+// Kastas vid valideringsfel med felkod och felmeddelande
 public sealed class CurrencyValidationException : Exception
 {
     public string ErrorCode { get; }

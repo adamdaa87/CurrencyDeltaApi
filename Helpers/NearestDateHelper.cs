@@ -2,16 +2,10 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Helpers;
 
-/// <summary>
-/// Selects the observation whose date is closest to a given target date.
-/// Used when a requested date falls on a non-bank day.
-/// </summary>
+// Hittar observationen med datum närmast måldatumet
 public static class NearestDateHelper
 {
-    /// <summary>
-    /// Returns the observation with the date nearest to <paramref name="targetDate"/>.
-    /// If two dates are equidistant, the earlier one is preferred.
-    /// </summary>
+    // Returnerar observationen med närmaste datum till targetDate
     public static RiksbankObservation FindNearest(IReadOnlyList<RiksbankObservation> observations, DateOnly targetDate)
     {
         if (observations.Count == 0)

@@ -4,9 +4,7 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Middleware;
 
-/// <summary>
-/// Catches unhandled exceptions and converts them into consistent JSON error responses.
-/// </summary>
+// Fångar undantag och returnerar JSON-felsvar
 public sealed class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;

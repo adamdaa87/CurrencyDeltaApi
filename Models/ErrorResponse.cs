@@ -1,6 +1,4 @@
 namespace CurrencyDeltaApi.Models;
 
-/// <summary>
-/// Standardized error envelope returned on validation or processing failures.
-/// </summary>
+// Standardiserat felsvar vid valideringsfel eller API-problem
 public sealed record ErrorResponse(string ErrorCode, string ErrorDetails);

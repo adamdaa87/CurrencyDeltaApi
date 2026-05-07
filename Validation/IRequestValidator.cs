@@ -2,11 +2,7 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Validation;
 
-/// <summary>
-/// Validates inbound currency delta requests.
-/// Returns a strongly-typed <see cref="ValidatedCurrencyDeltaRequest"/> on success.
-/// Throws <see cref="Exceptions.CurrencyValidationException"/> on failure.
-/// </summary>
+// Validerar inkommande requests och returnerar validerad request
 public interface IRequestValidator
 {
     ValidatedCurrencyDeltaRequest Validate(CurrencyDeltaRequest request);

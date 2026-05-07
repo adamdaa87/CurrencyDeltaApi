@@ -2,15 +2,13 @@ using CurrencyDeltaApi.Clients;
 
 namespace CurrencyDeltaApi.Strategy;
 
-/// <summary>
-/// Factory that selects the appropriate <see cref="IRateRetrievalStrategy"/>
-/// based on whether SEK is involved as the baseline or target currency.
-/// </summary>
+// Skapar rätt strategi baserat på om SEK är baseline eller target
 public interface IRateStrategyFactory
 {
     IRateRetrievalStrategy Create(string baseline, string currency);
 }
 
+// Factory-implementation som väljer ObservationRateStrategy eller CrossRateStrategy
 public sealed class RateStrategyFactory : IRateStrategyFactory
 {
     private readonly IRiksbankApiClient _client;
@@ -25,12 +23,14 @@ public sealed class RateStrategyFactory : IRateStrategyFactory
         bool isSekBaseline = baseline.Equals("SEK", StringComparison.OrdinalIgnoreCase);
         bool isSekTarget = currency.Equals("SEK", StringComparison.OrdinalIgnoreCase);
 
+        // Om SEK är baseline eller target, använd direkt hämtning
         if (isSekBaseline || isSekTarget)
         {
-            // invertValues = true only when the requested currency is SEK
+            // Invertera värden endast när SEK är target
             return new ObservationRateStrategy(_client, invertValues: isSekTarget);
         }
 
+        // Annars använd korskurs via SEK
         return new CrossRateStrategy(_client);
     }
 }

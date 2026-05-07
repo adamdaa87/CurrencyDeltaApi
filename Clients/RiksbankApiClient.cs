@@ -5,10 +5,12 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Clients;
 
+// HTTP-klient för att hämta valutakurser från Riksbankens API
 public sealed class RiksbankApiClient : IRiksbankApiClient
 {
     private readonly HttpClient _http;
 
+    // Återanvänd JSON-options för bättre prestanda
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -20,6 +22,7 @@ public sealed class RiksbankApiClient : IRiksbankApiClient
         _http = http;
     }
 
+    // Hämtar kursobservationer för en valutaserie
     public async Task<List<RiksbankObservation>> GetObservationsAsync(
         string series, DateOnly from, DateOnly to, CancellationToken ct = default)
     {
@@ -27,6 +30,7 @@ public sealed class RiksbankApiClient : IRiksbankApiClient
         return await FetchAsync(url, ct);
     }
 
+    // Hämtar korskurser mellan två valutor
     public async Task<List<RiksbankObservation>> GetCrossRatesAsync(
         string baselineSeries, string targetSeries, DateOnly from, DateOnly to, CancellationToken ct = default)
     {
@@ -34,6 +38,7 @@ public sealed class RiksbankApiClient : IRiksbankApiClient
         return await FetchAsync(url, ct);
     }
 
+    // Intern metod för att anropa API:et och hantera fel
     private async Task<List<RiksbankObservation>> FetchAsync(string relativeUrl, CancellationToken ct)
     {
         HttpResponseMessage response;
@@ -46,6 +51,7 @@ public sealed class RiksbankApiClient : IRiksbankApiClient
             throw new ExternalApiException($"Riksbank API request failed: {ex.Message}", ex);
         }
 
+        // Kontrollera om API:et returnerade ett fel
         if (!response.IsSuccessStatusCode)
         {
             string body = await response.Content.ReadAsStringAsync(ct);
@@ -62,5 +68,6 @@ public sealed class RiksbankApiClient : IRiksbankApiClient
         return observations;
     }
 
+    // Formaterar datum till yyyy-MM-dd som API:et kräver
     private static string Format(DateOnly d) => d.ToString("yyyy-MM-dd");
 }

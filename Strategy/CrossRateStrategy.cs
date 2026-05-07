@@ -4,11 +4,7 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Strategy;
 
-/// <summary>
-/// Used when neither the baseline nor the target currency is SEK.
-/// Delegates to the Riksbank CrossRates endpoint which computes the cross rate
-/// from the two underlying SEK-denominated series.
-/// </summary>
+// Används när varken baseline eller target är SEK (kör korskursberäkning)
 public sealed class CrossRateStrategy : IRateRetrievalStrategy
 {
     private readonly IRiksbankApiClient _client;

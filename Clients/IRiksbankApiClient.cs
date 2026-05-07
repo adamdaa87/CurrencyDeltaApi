@@ -2,20 +2,13 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Clients;
 
-/// <summary>
-/// Abstraction over the Riksbank SWEA v1 REST API.
-/// </summary>
+// HTTP-klient för Riksbankens SWEA v1 API
 public interface IRiksbankApiClient
 {
-    /// <summary>
-    /// GET /swea/v1/observations/{series}/{from}/{to}
-    /// </summary>
-    Task<List<RiksbankObservation>> GetObservationsAsync(
-        string series, DateOnly from, DateOnly to, CancellationToken ct = default);
+    // Hämtar observationer för en serie
+    Task<List<RiksbankObservation>> GetObservationsAsync(string series, DateOnly from, DateOnly to, CancellationToken ct = default);
 
-    /// <summary>
-    /// GET /swea/v1/CrossRates/{baselineSeries}/{targetSeries}/{from}/{to}
-    /// </summary>
+    // Hämtar korskurser mellan två serier
     Task<List<RiksbankObservation>> GetCrossRatesAsync(
         string baselineSeries, string targetSeries, DateOnly from, DateOnly to, CancellationToken ct = default);
 }

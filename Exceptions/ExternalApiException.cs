@@ -1,8 +1,6 @@
 namespace CurrencyDeltaApi.Exceptions;
 
-/// <summary>
-/// Thrown when the external Riksbank API call fails or returns unexpected data.
-/// </summary>
+// Kastas vid problem med Riksbankens API
 public sealed class ExternalApiException : Exception
 {
     public ExternalApiException(string message) : base(message) { }

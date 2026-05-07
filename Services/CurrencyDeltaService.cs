@@ -20,18 +20,23 @@ public sealed class CurrencyDeltaService : ICurrencyDeltaService
 
         foreach (string currency in request.Currencies)
         {
+            // 1. Välj strategi
             IRateRetrievalStrategy strategy = _strategyFactory.Create(request.Baseline, currency);
 
+            // 2. Hämta kurser
             var observations = await strategy.GetRatesAsync(
                 request.Baseline, currency, request.FromDate, request.ToDate, ct);
 
+            // 3. Hitta närmaste datum
             // When the requested dates fall on non-bank days, use the nearest available date.
             var fromObservation = NearestDateHelper.FindNearest(observations, request.FromDate);
             var toObservation = NearestDateHelper.FindNearest(observations, request.ToDate);
 
+            // 4. Beräkna delta
             // Delta formula: rateAtToDate − rateAtFromDate
             decimal delta = Math.Round(toObservation.Value - fromObservation.Value, 3);
 
+            // 5. Returnera resultat
             results.Add(new CurrencyDeltaResponse(currency, delta));
         }
 

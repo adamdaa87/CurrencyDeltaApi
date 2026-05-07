@@ -4,11 +4,10 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Validation;
 
+// Validerar valutakod, datum och formattering
 public sealed class RequestValidator : IRequestValidator
 {
-    /// <summary>
-    /// Currency codes for which Riksbank publishes PMI series.
-    /// </summary>
+    // Valutor som stöds av Riksbankens API
     private static readonly HashSet<string> SupportedCurrencies = new(StringComparer.OrdinalIgnoreCase)
     {
         "AUD", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "EUR", "GBP",
@@ -20,7 +19,7 @@ public sealed class RequestValidator : IRequestValidator
 
     public ValidatedCurrencyDeltaRequest Validate(CurrencyDeltaRequest request)
     {
-        // --- Null / empty checks ---
+        // Kontrollera att obligatoriska fält finns
         if (string.IsNullOrWhiteSpace(request.Baseline))
             throw new CurrencyValidationException("currencyproblem", "Baseline currency is required");
 
@@ -28,8 +27,8 @@ public sealed class RequestValidator : IRequestValidator
             throw new CurrencyValidationException("currencyproblem", "At least one target currency is required");
 
         string baseline = request.Baseline.Trim().ToUpperInvariant();
-
-        // --- Currency validation ---
+        if (string.IsNullOrWhiteSpace(baseline))
+        // Validera valutor mot stödlista
         if (!SupportedCurrencies.Contains(baseline))
             throw new CurrencyValidationException("currencyproblem", $"Unsupported baseline currency: {baseline}");
 
@@ -52,7 +51,7 @@ public sealed class RequestValidator : IRequestValidator
             normalizedCurrencies.Add(currency);
         }
 
-        // --- Date validation ---
+        // Validera datumformat och logik
         if (string.IsNullOrWhiteSpace(request.FromDate))
             throw new CurrencyValidationException("dateproblem", "From date is required");
 

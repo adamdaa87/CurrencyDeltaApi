@@ -1,8 +1,6 @@
 namespace CurrencyDeltaApi.Models;
 
-/// <summary>
-/// Strongly-typed request produced after successful validation.
-/// </summary>
+// Validerad request med starka typer
 public sealed record ValidatedCurrencyDeltaRequest(
     string Baseline,
     List<string> Currencies,

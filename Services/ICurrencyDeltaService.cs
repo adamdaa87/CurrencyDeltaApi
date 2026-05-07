@@ -2,10 +2,7 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Services;
 
-/// <summary>
-/// Core service that computes exchange-rate deltas between two dates
-/// for a list of currencies relative to a baseline currency.
-/// </summary>
+// Tjänst som beräknar valutakursdeltan mellan två datum
 public interface ICurrencyDeltaService
 {
     Task<List<CurrencyDeltaResponse>> GetDeltasAsync(

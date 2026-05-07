@@ -2,10 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace CurrencyDeltaApi.Models;
 
-/// <summary>
-/// A single observation returned by the Riksbank SWEA v1 API.
-/// Handles both string and numeric JSON representations of the value field.
-/// </summary>
+// En enskild observation från Riksbankens API
 public sealed record RiksbankObservation
 {
     [JsonPropertyName("date")]

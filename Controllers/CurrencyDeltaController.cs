@@ -5,6 +5,7 @@ using CurrencyDeltaApi.Validation;
 
 namespace CurrencyDeltaApi.Controllers;
 
+// API-controller som hanterar valutakursdeltan
 [ApiController]
 [Route("[controller]")]
 public sealed class CurrencyDeltaController : ControllerBase
@@ -18,15 +19,11 @@ public sealed class CurrencyDeltaController : ControllerBase
         _service = service;
     }
 
-    /// <summary>
-    /// Computes exchange-rate deltas between two dates for a set of currencies
-    /// relative to a baseline currency.
-    /// </summary>
+    // Beräknar valutakursförändringar mellan två datum
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CurrencyDeltaRequest request,CancellationToken ct)
     {
-        // Validation throws CurrencyValidationException on failure,
-        // which the global middleware converts to a 400 response.
+        // Validera request (kastar CurrencyValidationException vid fel)
         var validated = _validator.Validate(request);
 
         var deltas = await _service.GetDeltasAsync(validated, ct);

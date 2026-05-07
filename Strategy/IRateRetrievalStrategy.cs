@@ -2,10 +2,7 @@ using CurrencyDeltaApi.Models;
 
 namespace CurrencyDeltaApi.Strategy;
 
-/// <summary>
-/// Strategy interface for retrieving exchange-rate observations.
-/// Different implementations handle SEK-baseline, SEK-target, and cross-rate scenarios.
-/// </summary>
+// Strategi för att hämta valutakurser (direkt eller via korskurs)
 public interface IRateRetrievalStrategy
 {
     Task<List<RiksbankObservation>> GetRatesAsync(
